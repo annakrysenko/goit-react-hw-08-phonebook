@@ -2,17 +2,24 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOutUser } from 'redux/auth/authThunk';
 import { getUserName } from 'redux/auth/authSelector';
+import { Icon } from '@chakra-ui/react';
+import { RiUser3Fill, RiUserShared2Fill } from 'react-icons/ri';
+import { Box, Text } from '@chakra-ui/react';
 
 const UserMenu = () => {
   const userName = useSelector(getUserName);
   const dispatch = useDispatch();
   return (
-    <>
-      <p>{userName}</p>
+    <Box display={{ md: 'flex' }} gap="20px">
+      <Box display={{ md: 'flex' }} alignItems="center" gap="5px">
+        {<Icon as={RiUser3Fill} color="#805AD5" />}
+        <Text color="#805AD5">{userName}</Text>
+      </Box>
+
       <button type="button" onClick={() => dispatch(logOutUser())}>
-        Logout
+        <Icon as={RiUserShared2Fill} color="#805AD5" />
       </button>
-    </>
+    </Box>
   );
 };
 

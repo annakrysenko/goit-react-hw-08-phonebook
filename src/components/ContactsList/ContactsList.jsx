@@ -3,7 +3,9 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContacts } from 'redux/contacts/contactsSelector';
 import { deleteContact, fetchContacts } from 'redux/contacts/contactsThunk';
-import styles from './ContactsList.module.css';
+import { Box, Text, IconButton } from '@chakra-ui/react';
+import { RiCloseCircleFill } from 'react-icons/ri';
+import { Icon } from '@chakra-ui/react';
 
 const ContactsList = ({ title }) => {
   const dispatch = useDispatch();
@@ -13,32 +15,47 @@ const ContactsList = ({ title }) => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
-  // console.log('contacts ===> ', contacts);
+  console.log('contacts ===> ', contacts);
   return (
-    <>
-      <h2 className={styles.title}>{title}</h2>
-      <ul className={styles.list}>
+    <Box>
+      <Text
+        fontSize="32px"
+        textTransform="uppercase"
+        fontWeight="600"
+        textAlign="center"
+      >
+        {title}
+      </Text>
+      <ul>
         {contacts.length > 0 ? (
           contacts.map(contact => (
-            <li key={contact.id} className={styles.item}>
-              <p>
-                <span>{contact.name}:</span>
-                <span>{contact.number}</span>
-              </p>
-              <button
-                type="button"
-                onClick={() => dispatch(deleteContact(contact.id))}
-                className={styles.delete}
-              >
-                Delete
-              </button>
+            <li key={contact.id}>
+              <Box display={{ md: 'flex' }} justifyContent="space-between">
+                <Text>
+                  <span>{contact.name}: </span>
+                  <span>{contact.number}</span>
+                </Text>
+
+                <IconButton
+                  type="button"
+                  onClick={() => dispatch(deleteContact(contact.id))}
+                  color="red"
+                  p="0px"
+                  height="20px"
+                  width="20px"
+                  padding="0"
+                  background="transparent"
+                  _hover={{ bg: 'transparent' }}
+                  icon={<RiCloseCircleFill />}
+                />
+              </Box>
             </li>
           ))
         ) : (
-          <p className={styles.no_contacts}>There are no contacts here</p>
+          <Text>There are no contacts here</Text>
         )}
       </ul>
-    </>
+    </Box>
   );
 };
 

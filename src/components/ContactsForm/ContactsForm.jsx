@@ -5,10 +5,12 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContacts } from 'redux/contacts/contactsSelector';
 import { addContact } from 'redux/contacts/contactsThunk';
+import { Box, Button, FormLabel, Input, useToast } from '@chakra-ui/react';
 
 const ContactsForm = ({ title }) => {
   const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
+  const toast = useToast();
 
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
@@ -35,7 +37,11 @@ const ContactsForm = ({ title }) => {
         contact => contact.name.toLowerCase() === name.toLowerCase()
       )
     ) {
-      return Notify.warning('This contact is already in the list');
+      return toast({
+        status: 'warning',
+        position: 'top-right',
+        description: `${name} is already in contacts.`,
+      });
     }
 
     const contact = {
@@ -48,13 +54,20 @@ const ContactsForm = ({ title }) => {
   };
 
   return (
-    <div className={styles.form_wrapper}>
-      <h1 className={styles.title}>{title}</h1>
-
-      <form onSubmit={onSubmitData} className={styles.form}>
-        <label name="name" className={styles.input_wrapper}>
-          <span className={styles.label_text}>Name:</span>
-          <input
+    <Box
+      display={{ md: 'flex' }}
+      flexDirection="column"
+      // h="300px"
+      w="300px"
+      // m="15px auto"
+      border="1px solid black"
+      p="15px"
+      borderRadius="8px"
+    >
+      <form onSubmit={onSubmitData}>
+        <FormLabel name="name" display={{ md: 'flex' }} flexDirection="column">
+          Name:
+          <Input
             type="text"
             name="name"
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -62,12 +75,15 @@ const ContactsForm = ({ title }) => {
             required
             onChange={handleInput}
             value={name}
-            className={styles.input}
           />
-        </label>
-        <label name="number" className={styles.input_wrapper}>
-          <span className={styles.label_text}>Number:</span>
-          <input
+        </FormLabel>
+        <FormLabel
+          name="number"
+          display={{ md: 'flex' }}
+          flexDirection="column"
+        >
+          Number:
+          <Input
             type="tel"
             name="number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -75,18 +91,14 @@ const ContactsForm = ({ title }) => {
             required
             onChange={handleInput}
             value={number}
-            className={styles.input}
           />
-        </label>
-        <button type="submit" className={styles.submit}>
+        </FormLabel>
+        <Button colorScheme="purple" variant="solid" type="submit" mt="10px">
           Add contact
-        </button>
+        </Button>
       </form>
-    </div>
+    </Box>
   );
-};
-ContactsForm.propTypes = {
-  title: PropTypes.string.isRequired,
 };
 
 export default ContactsForm;
