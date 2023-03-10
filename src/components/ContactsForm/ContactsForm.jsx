@@ -1,6 +1,3 @@
-import { Notify } from 'notiflix';
-import styles from './ContactsForm.module.css';
-import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContacts } from 'redux/contacts/contactsSelector';

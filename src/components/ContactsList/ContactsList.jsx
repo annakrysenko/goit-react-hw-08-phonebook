@@ -5,7 +5,6 @@ import { getContacts } from 'redux/contacts/contactsSelector';
 import { deleteContact, fetchContacts } from 'redux/contacts/contactsThunk';
 import { Box, Text, IconButton } from '@chakra-ui/react';
 import { RiCloseCircleFill } from 'react-icons/ri';
-import { Icon } from '@chakra-ui/react';
 
 const ContactsList = ({ title }) => {
   const dispatch = useDispatch();
