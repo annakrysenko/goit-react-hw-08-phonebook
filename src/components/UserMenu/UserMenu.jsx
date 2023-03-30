@@ -10,14 +10,24 @@ const UserMenu = () => {
   const userName = useSelector(getUserName);
   const dispatch = useDispatch();
   return (
-    <Box display={{ md: 'flex' }} gap="20px">
+    <Box
+      display={{ md: 'flex' }}
+      gap="20px"
+      alignItems="center"
+      justifyContent="center"
+    >
       <Box display={{ md: 'flex' }} alignItems="center" gap="5px">
         {<Icon as={RiUser3Fill} color="#805AD5" />}
         <Text color="#805AD5">{userName}</Text>
       </Box>
 
       <button type="button" onClick={() => dispatch(logOutUser())}>
-        <Icon as={RiUserShared2Fill} color="#805AD5" />
+        <Icon
+          as={RiUserShared2Fill}
+          display={{ md: 'flex' }}
+          alignItems="center"
+          color="#805AD5"
+        />
       </button>
     </Box>
   );
